@@ -1,0 +1,148 @@
+/* Container */
+.admin-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5vw;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+  position: relative;
+}
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 2%;
+  left: 5%;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+/* Form Card */
+.admin-form {
+  background: #fff;
+  padding: 5vw;
+  border-radius: 2vw;
+  box-shadow: 0 2vw 5vw rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  text-align: center;
+}
+
+/* Form Elements */
+.admin-form h2 {
+  font-size: 2rem;
+  margin-bottom: 4vh;
+  color: #333;
+}
+
+.admin-form input,
+.admin-form select {
+  padding: 2vh 1.5vw;
+  font-size: 1rem;
+  border-radius: 1vw;
+  border: 0.1vw solid #ccc;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.admin-form input:focus,
+.admin-form select:focus {
+  border-color: #007BFF;
+}
+
+/* Submit Button */
+.admin-form button[type="submit"] {
+  padding: 2vh 0;
+  border: none;
+  border-radius: 1vw;
+  background: #007BFF;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 1vh;
+}
+
+.admin-form button[type="submit"]:hover {
+  background: #0056b3;
+}
+
+.admin-form button[type="submit"]:disabled {
+  background: #6cace4;
+  cursor: not-allowed;
+}
+
+/* Message */
+.message {
+  margin-top: 2vh;
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .admin-form {
+    max-width: 90%;
+    padding: 6vw;
+  }
+
+  .admin-form h2 {
+    font-size: 1.8rem;
+  }
+
+  .admin-form input,
+  .admin-form select {
+    font-size: 0.95rem;
+    padding: 2vh 2vw;
+  }
+
+  .admin-form button[type="submit"] {
+    font-size: 1.1rem;
+  }
+
+  .back-btn {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-form {
+    max-width: 95%;
+    padding: 7vw;
+  }
+
+  .admin-form h2 {
+    font-size: 1.5rem;
+  }
+
+  .admin-form input,
+  .admin-form select {
+    font-size: 0.9rem;
+    padding: 2vh 3vw;
+  }
+
+  .admin-form button[type="submit"] {
+    font-size: 1rem;
+  }
+
+  .back-btn {
+    font-size: 0.85rem;
+    top: 2%;
+    left: 3%;
+  }
+}

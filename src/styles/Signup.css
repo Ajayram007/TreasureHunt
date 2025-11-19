@@ -1,0 +1,153 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.signup-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5vw;
+}
+
+/* Card */
+.signup-card {
+  background: rgba(255,255,255,.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 5vw;
+  border-radius: 2vw;
+  box-shadow: 0 2vw 5vw rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  position: relative;
+}
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  background: red;
+  border: none;
+  color: #f2f2f3;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+/* Title and Messages */
+.signup-title {
+  font-size: 2rem;
+  margin-bottom: 4vh;
+  color: #333;
+  font-weight: 600;
+}
+
+.signup-message {
+  margin-bottom: 3vh;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* Form */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.signup-form input,
+.signup-form select {
+  padding: 2vh 1.5vw;
+  border-radius: 1vw;
+  border: 0.1vw solid #ccc;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.signup-form input:focus,
+.signup-form select:focus {
+  outline: none;
+  border-color: #007BFF;
+}
+
+/* Submit Button */
+.signup-button {
+  padding: 2vh 0;
+  border: none;
+  border-radius: 1vw;
+  background: #007BFF;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.signup-button:hover {
+  background: #0056b3;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .signup-card {
+    max-width: 60em;
+    padding: 6vw;
+  }
+
+  .signup-title {
+    font-size: 1.8rem;
+  }
+
+  .signup-form input,
+  .signup-form select {
+    font-size: 0.95rem;
+    padding: 2vh 2vw;
+  }
+
+  .signup-button {
+    font-size: 1.1rem;
+  }
+
+  .back-btn {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-card {
+    max-width: 50em;
+    padding: 8vw;
+  }
+
+  .signup-title {
+    font-size: 1.5rem;
+  }
+
+  .signup-form input,
+  .signup-form select {
+    font-size: 0.9rem;
+    padding: 2vh 3vw;
+  }
+
+  .signup-button {
+    font-size: 1rem;
+  }
+
+  .back-btn {
+    font-size: 0.9rem;
+  }
+}

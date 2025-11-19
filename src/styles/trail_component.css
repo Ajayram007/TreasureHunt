@@ -1,0 +1,92 @@
+/* Full page center */
+.trail-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Card container */
+.trail-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: 0.3s ease;
+}
+
+.trail-card h2 {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* Response message */
+.trail-message {
+  text-align: center;
+  background: #e9f7ef;
+  border-left: 4px solid #2ecc71;
+  padding: 10px;
+  margin-bottom: 15px;
+  color: #2e7d32;
+  font-size: 0.95rem;
+  border-radius: 5px;
+}
+
+/* Form styling */
+.trail-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trail-form label {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.trail-form input {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.25s;
+}
+
+.trail-form input:focus {
+  border-color: #007bff;
+}
+
+/* Submit button */
+.trail-form button {
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  font-size: 1.05rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.trail-form button:hover {
+  background: #0056b3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .trail-card {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .trail-form input,
+  .trail-form button {
+    padding: 11px;
+    font-size: 0.95rem;
+  }
+}

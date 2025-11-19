@@ -1,0 +1,19 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(10deg, #ad5389, #3c1053);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.card-container{
+  padding: 4em 8em;
+  background: rgba(255, 255, 255, .3);
+  border-radius: 20px;
+}
+.signup-btn{background: rgb(0, 120, 0);}
+.login-btn{background: #1a00ab;}

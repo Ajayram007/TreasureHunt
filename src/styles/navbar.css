@@ -1,0 +1,195 @@
+/* Global Fix to Prevent Horizontal Scrolling */
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar Container */
+.bossy-navbar {
+  background: linear-gradient(135deg, #0a0a0a, #333333);
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  border-bottom: 2px solid #b69638;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Brand Styling */
+.bossy-navbar-brand h4 {
+  color: #af9b9b;
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Toggler Button - Initially Hidden */
+.bossy-navbar-toggler {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: none;
+  z-index: 1100;
+}
+
+/* Toggler Icon Styling */
+.bossy-navbar-toggler-icon {
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  position: relative;
+}
+
+.bossy-navbar-toggler-icon::before,
+.bossy-navbar-toggler-icon::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+}
+
+.bossy-navbar-toggler-icon::before {
+  top: -8px;
+}
+
+.bossy-navbar-toggler-icon::after {
+  top: 8px;
+}
+
+/* Change color on hover */
+.bossy-navbar-toggler:hover .bossy-navbar-toggler-icon,
+.bossy-navbar-toggler:hover .bossy-navbar-toggler-icon::before,
+.bossy-navbar-toggler:hover .bossy-navbar-toggler-icon::after {
+  background: #b79839;
+}
+
+/* Navbar Content */
+.bossy-navbar-collapse {
+  display: flex;
+  justify-content: flex-end;
+  width: auto;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.bossy-navbar-nav {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Nav Items & Links */
+.bossy-nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.bossy-nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.bossy-nav-link:hover,
+.bossy-nav-link.active {
+  color: #b69638;
+}
+
+/* Special Styling for Logout & Other Links */
+.bossy-nav-link1 {
+  color: white;
+  transition: background 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+}
+
+.bossy-nav-link1:hover {
+  color: #b69638;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media screen and (max-width: 1024px) {
+  .bossy-navbar-toggler {
+    display: block;
+  }
+
+  .bossy-navbar-collapse {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    flex-direction: column;
+    padding-top: 60px;
+    transition: right 0.4s ease-in-out;
+    display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .bossy-navbar-collapse.show {
+    box-shadow: -5px 0px 10px #b69638;
+    right: 0;
+    width: 30%;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .bossy-navbar-nav {
+    position: relative;
+    top: 0;
+    padding: 30%;
+    padding-top: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    height: auto;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .bossy-nav-item {
+    justify-content: flex-end;
+  }
+}
+
+/* User Info Button */
+.bossy-user-info {
+  background: #b69638;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  margin-right: 20%;
+}
+
+.bossy-user-info:hover {
+  background: #d4af37;
+}
+
+.bossy-nav-item .bossy-user-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

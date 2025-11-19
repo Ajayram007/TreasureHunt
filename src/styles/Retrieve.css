@@ -1,0 +1,95 @@
+.user-name {
+  font-family: serif;
+  font-style: italic;
+}
+
+.users-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 5vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f2f2f2;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 3vh;
+  color: #333;
+}
+
+.message {
+  color: #e74c3c;
+  font-weight: bold;
+  margin-bottom: 2vh;
+}
+
+/* Vertical list layout */
+.users-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  width: 100%;
+  max-width: 600px; /* limit width */
+}
+
+/* Individual user card */
+.user-card {
+  background: #d3d30786;
+  padding: 3vw 2vw;
+  border-radius: 1vw;
+  box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  justify-content: space-between; /* name left, phone right */
+  align-items: center;
+}
+
+.user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1vw 2vw rgba(0,0,0,0.2);
+}
+
+.user-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #007BFF;
+}
+
+.user-phone {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-card {
+    padding: 4vw 3vw;
+  }
+  .user-name {
+    font-size: 1.1rem;
+  }
+  .user-phone {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .users-container {
+    padding: 5vw 3vw;
+  }
+  .user-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5vw 3vw;
+  }
+  .user-name {
+    font-size: 1rem;
+  }
+  .user-phone {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,112 @@
+.update-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f5f6fa;
+}
+
+.back-btn {
+  align-self: flex-start;
+  padding: 8px 14px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+.back-btn:hover {
+  background: #000;
+}
+
+.update-card {
+  width: 90%;
+  max-width: 600px;
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.update-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.list-title {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.place-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.place-list li {
+  background: #eef3ff;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+}
+
+.place-index {
+  font-weight: bold;
+  color: #2d6cdf;
+}
+
+.update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.update-form input,
+.update-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.update-btn {
+  padding: 12px;
+  background: #2d89ef;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.update-btn:hover {
+  background: #1a63b9;
+}
+
+.error {
+  color: red;
+  margin-bottom: 12px;
+}
+
+.loading {
+  text-align: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .update-card {
+    padding: 16px;
+  }
+
+  .update-btn,
+  .back-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

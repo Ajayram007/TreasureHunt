@@ -1,0 +1,64 @@
+.qr-container {
+  text-align: center;
+  padding: 20px;
+  max-width: 450px;
+  margin: auto;
+  background: #f8f9ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.qr-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 15px;
+}
+
+.btn {
+  padding: 12px 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.start-btn {
+  background: #007bff;
+}
+
+.start-btn:hover {
+  background: #0066d6;
+}
+
+.scan-btn {
+  background: #28a745;
+}
+
+.scan-btn:hover {
+  background: #1e8a38;
+}
+
+.qr-reader {
+  width: 300px;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.next-target {
+  font-size: 16px;
+  margin-top: 10px;
+  color: #444;
+}
+
+.status-msg {
+  margin-top: 15px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #222;
+}

@@ -1,0 +1,100 @@
+/* Main Wrapper */
+.trail-retrieve-wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Title */
+.title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Error Message */
+.retrieve-error {
+  color: #c62828;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* When no levels */
+.empty-msg {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+/* Cards Grid */
+.trail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Each Trail Level Card */
+.trail-level-card {
+  background: #ffffff;
+  width: 700px;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-left: 6px solid #dbb809;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Hover Effect */
+.trail-level-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Level Heading */
+.trail-level-card h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #b41616;
+}
+
+/* No Places Text */
+.no-place {
+  color: #757575;
+  font-size: 14px;
+}
+
+/* Places List */
+.place-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.place-list li {
+  padding: 6px 10px;
+  background: #f5f7ff;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  font-size: 14px;
+  border-left: 4px solid #647385;
+}
+
+/* ❗ FULLY RESPONSIVE */
+@media (max-width: 600px) {
+  .trail-level-card {
+    padding: 15px;
+    width: 300px;
+  }
+  .trail-level-card h3 {
+    font-size: 20px;
+  }
+  .place-list li {
+    font-size: 13px;
+  }
+}
