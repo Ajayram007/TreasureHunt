@@ -48,7 +48,7 @@ const Signup = () => {
           <select name="role" value={formData.role} onChange={handleChange} required>
             <option value="">Select Role</option>
             <option value="user">User</option>
-            <option value="admin">Admin</option>
+            // <option value="admin">Admin</option>
           </select>
           <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
           <button type="submit" className="signup-button">Sign Up</button>
