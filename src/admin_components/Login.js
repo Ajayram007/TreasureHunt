@@ -27,7 +27,7 @@ const Login = () => {
     setMessage("");
 
     try {
-      const response = await axios.post("https://treasurehuntbackend-y0nc.onrender.com/login", formData);
+      const response = await axios.post("https://treasurehuntbackend-y0nc.onrender.com/login", formData,{withCredentials:true;});
 
       const user = response.data.user;
       const token = response.data.token;
