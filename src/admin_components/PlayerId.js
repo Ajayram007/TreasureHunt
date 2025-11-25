@@ -18,7 +18,7 @@ const PlayerId = () => {
       try {
         const token = localStorage.getItem("token");
 
-        const res = await axios.get(`/admin/player/${playerId}`, {
+        const res = await axios.get(`https://treasurehuntbackend-y0nc.onrender.com/admin/player/${playerId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
