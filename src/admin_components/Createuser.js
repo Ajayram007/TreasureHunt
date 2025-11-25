@@ -29,7 +29,7 @@ const AdminCreateUser = () => {
 
     try {
       const token = localStorage.getItem("token"); // Admin JWT token
-      const response = await axios.post("/create", formData, {
+      const response = await axios.post("https://treasurehuntbackend-y0nc.onrender.com/create", formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
