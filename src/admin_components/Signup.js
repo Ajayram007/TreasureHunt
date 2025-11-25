@@ -24,7 +24,7 @@ const Signup = () => {
     setMessage("");
 
     try {
-      const res = await axios.post("/signup", formData);
+      const res = await axios.post("https://treasurehuntbackend-y0nc.onrender.com/signup", formData);
       setMessage(res.data.message);
       setFormData({ name: "", password: "", role: "", department: "", phonenumber: "" });
     } catch (error) {
