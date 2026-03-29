@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FluidGlass from "./FluidGlass";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "100%", height: "100dvh", overflow: "hidden" }}>
       
       {/* 3D Background Layer */}
       <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}>
@@ -14,7 +21,7 @@ const Home = () => {
           mode="lens"
           scrollEnabled={false}
           lensProps={{
-            scale: 0.02,
+            scale: { mobile: 0.012, tablet: 0.016, desktop: 0.02 },
             ior: 1.8,
             thickness: 100,
             transmission: 1,
@@ -38,7 +45,7 @@ const Home = () => {
             background: "rgba(255, 255, 255, 0.4)", 
             backdropFilter: "blur(20px)",
             pointerEvents: "auto",
-            marginBottom: "100px"
+            marginBottom: isMobile ? "30px" : "100px"
           }}
         >
           {/* Logo */}

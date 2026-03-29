@@ -64,13 +64,39 @@ const ModeWrapper = memo(function ModeWrapper({
     const { gl, viewport, pointer, camera } = state;
     const v = viewport.getCurrentViewport(camera, [0, 0, 15]);
 
-    const destX = followPointer ? (pointer.x * v.width) / 2 : 0;
-    const destY = lockToBottom ? -v.height / 2 + 0.2 : followPointer ? (pointer.y * v.height) / 2 : 0;
+    const isMobile = window.innerWidth <= 639;
+    const isInteracting = pointer.x !== 0 || pointer.y !== 0;
+
+    let destX = 0;
+    let destY = 0;
+
+    if (followPointer) {
+      if (isMobile && !isInteracting) {
+        const t = state.clock.elapsedTime;
+        destX = Math.sin(t * 0.8) * (v.width * 0.35);
+        destY = Math.cos(t * 0.5) * (v.height * 0.35);
+      } else {
+        destX = (pointer.x * v.width) / 2;
+        destY = (pointer.y * v.height) / 2;
+      }
+    }
+
+    if (lockToBottom) {
+      destY = -v.height / 2 + 0.2;
+    }
+
     easing.damp3(ref.current.position, [destX, destY, 15], 0.15, delta);
 
+    // Evaluate responsive scale
+    let currentScale = modeProps.scale;
+    if (typeof modeProps.scale === 'object' && modeProps.scale !== null) {
+      const w = window.innerWidth;
+      currentScale = w <= 639 ? modeProps.scale.mobile : w <= 1023 ? modeProps.scale.tablet : modeProps.scale.desktop;
+    }
+
     // Always follow pointer at a small fixed cursor-like scale
-    const baseScale = modeProps.scale != null ? modeProps.scale : Math.min(0.15, (v.width * 0.9) / geoWidthRef.current);
-    const targetScale = followPointer ? (modeProps.scale != null ? modeProps.scale : 0.04) : baseScale;
+    const baseScale = currentScale != null ? currentScale : Math.min(0.15, (v.width * 0.9) / geoWidthRef.current);
+    const targetScale = followPointer ? (currentScale != null ? currentScale : 0.04) : baseScale;
     easing.damp3(ref.current.scale, [targetScale, targetScale, targetScale], 0.15, delta);
 
     gl.setRenderTarget(buffer);
@@ -246,9 +272,9 @@ function HoverLetter({ char, index, xOffset, fontSize }) {
 
 function Typography() {
   const DEVICE = {
-    mobile: { fontSize: 0.2 },
-    tablet: { fontSize: 0.4 },
-    desktop: { fontSize: 0.6 }
+    mobile: { fontSize: 0.12 },
+    tablet: { fontSize: 0.3 },
+    desktop: { fontSize: 0.5 }
   };
   const getDevice = () => {
     const w = window.innerWidth;
