@@ -38,8 +38,10 @@ const QRScanner = ({ onScan }) => {
             // ✅ Trim extra whitespace
             parsed.answer = parsed.answer.trim();
 
-            stopScanner();
-            onScan(parsed); // parsed contains only { answer: "..." }
+            // ✅ No need to call stopScanner() here. 
+            // Setting scanning: false in parent will unmount this component,
+            // triggering the useEffect cleanup which calls stopScanner().
+            onScan(parsed); 
           }
         );
 
@@ -51,20 +53,28 @@ const QRScanner = ({ onScan }) => {
     };
 
     const stopScanner = async () => {
+      // ✅ Check if it's already stopping or stopped to prevent race conditions
       if (scannerRef.current && isRunning.current) {
+        isRunning.current = false; // Set this immediately
         try {
           await scannerRef.current.stop();
           console.log("Scanner stopped");
         } catch (err) {
-          console.warn("Stop skipped:", err.message);
+          // Gracefully catch the "removeChild" error which happens if the DOM node is already gone
+          if (err.message?.includes("removeChild")) {
+             console.log("Scanner cleaned up (DOM already removed)");
+          } else {
+             console.warn("Stop skipped:", err.message);
+          }
         }
-        isRunning.current = false;
       }
     };
 
     startScanner();
 
-    return () => stopScanner();
+    return () => {
+      stopScanner();
+    };
   }, [onScan]);
 
   return <div id="qr-reader" style={{ width: "100%" }} />;

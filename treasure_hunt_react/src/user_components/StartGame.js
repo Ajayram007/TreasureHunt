@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import QRScanner from "./QRScanner";
@@ -20,7 +20,7 @@ const StartGame = () => {
   });
 
   /* ---------------- START / RESUME GAME ---------------- */
-  const fetchGameState = async () => {
+  const fetchGameState = useCallback(async () => {
   setGameState(prev => ({
     ...prev,
     loading: true,
@@ -77,7 +77,7 @@ const StartGame = () => {
       loading: false
     }));
   }
-};
+}, [playerId]);
 
   useEffect(() => {
     fetchGameState();
@@ -85,7 +85,7 @@ const StartGame = () => {
   }, [playerId]);
 
   /* ---------------- HANDLE QR ---------------- */
-  const handleScan = async (parsed) => {
+  const handleScan = useCallback(async (parsed) => {
     if (!parsed?.answer) {
       setGameState(prev => ({
         ...prev,
@@ -134,7 +134,7 @@ const StartGame = () => {
         scanning: false
       }));
     }
-  };
+  }, [playerId]);
 
   /* ---------------- FILE RENDER ---------------- */
   const renderFile = (file) => {
