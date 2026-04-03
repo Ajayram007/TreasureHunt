@@ -61,12 +61,14 @@ const QRScanner = ({ onScan }) => {
           console.log("Scanner stopped");
         } catch (err) {
           // Gracefully catch the "removeChild" error which happens if the DOM node is already gone
-          if (err.message?.includes("removeChild")) {
-             console.log("Scanner cleaned up (DOM already removed)");
+          const msg = err?.message || err?.toString() || "";
+          if (msg.includes("removeChild") || msg.includes("not a child")) {
+             console.log("Scanner cleaned up (DOM node already removed)");
           } else {
-             console.warn("Stop skipped:", err.message);
+             console.warn("Stop skipped:", msg);
           }
         }
+        scannerRef.current = null; // Clear the ref
       }
     };
 

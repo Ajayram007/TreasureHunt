@@ -27,7 +27,21 @@ export default function FluidGlass({ mode = 'lens', scrollEnabled = true, lensPr
   } = rawOverrides;
 
   return (
-    <Canvas camera={{ position: [0, 0, 20], fov: 15 }} gl={{ alpha: true }} style={{ cursor: 'none' }}>
+    <Canvas 
+      camera={{ position: [0, 0, 20], fov: 15 }} 
+      gl={{ 
+        alpha: true, 
+        powerPreference: 'high-performance',
+        antialias: true 
+      }} 
+      style={{ cursor: 'none' }}
+      onCreated={({ gl }) => {
+        gl.domElement.addEventListener('webglcontextlost', (event) => {
+          event.preventDefault();
+          console.warn('WebGL context lost. Resources will be reloaded on restoration.');
+        }, false);
+      }}
+    >
       <ScrollControls damping={0.2} pages={scrollEnabled ? 3 : 0} distance={0.4} enabled={scrollEnabled}>
         {mode === 'bar' && <NavItems items={navItems} />}
         <Wrapper modeProps={modeProps}>
@@ -72,7 +86,9 @@ const ModeWrapper = memo(function ModeWrapper({
 
     if (followPointer) {
       if (isMobile && !isInteracting) {
-        const t = state.clock.elapsedTime;
+        // Use performance.now() as a fallback for the deprecated Three.js Clock if needed, 
+        // though R3F currently still provides state.clock.
+        const t = state.clock?.elapsedTime || (performance.now() / 1000);
         destX = Math.sin(t * 0.8) * (v.width * 0.35);
         destY = Math.cos(t * 0.5) * (v.height * 0.35);
       } else {
