@@ -20,6 +20,7 @@ const QRScanner = ({ onScan }) => {
 
             console.log("QR RAW =", decodedText);
 
+            let parsed = null;
             // ✅ Parse QR: handle JSON { answer: "..." } or Raw "..."
             try {
               const res = JSON.parse(decodedText);
