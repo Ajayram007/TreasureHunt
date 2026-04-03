@@ -25,9 +25,28 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// CORS setup
+// Dynamic CORS setup (Supports Localhost & all Vercel Previews)
+const allowedOrigins = [
+  'http://localhost:3001',
+  'https://treasure-hunt-six-olive.vercel.app', // Current deployment
+  'https://treasure-hunt-ha23jyaut-ajayram-rjs-projects.vercel.app' // Legacy
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const isAllowed = allowedOrigins.includes(origin) || 
+                      origin.endsWith('.vercel.app');
+
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      console.warn('CORS Blocked for:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,POST,PUT,DELETE',
   credentials: true,
 }));
