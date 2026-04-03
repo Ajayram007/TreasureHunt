@@ -104,7 +104,7 @@ const TrailCreate = () => {
             {/* Question Index */}
             <div className="mb-3">
               <label className="form-label">
-                Insert at Question Index (optional)
+                Insert at Question Index [0-4](optional)
               </label>
               <input
                 type="number"
@@ -127,7 +127,7 @@ const TrailCreate = () => {
                 onChange={(e) =>
                   setForm({ ...form, Text: e.target.value })
                 }
-                required
+                
               />
             </div>
 

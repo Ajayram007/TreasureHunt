@@ -55,8 +55,8 @@ const TrailRetrieveId = () => {
   const renderMedia = (file) => {
     if (!file) return null;
 
-    // Convert relative URL if needed
-    const fileUrl = file.startsWith("http") ? file : `/uploads/${file}`;
+    const backendUrl = "http://localhost:3000"; // Should ideally come from config
+    const fileUrl = file.startsWith("http") ? file : `${backendUrl}/uploads/${file}`;
 
     if (fileUrl.match(/\.(jpeg|jpg|png|gif)$/i)) {
       return (

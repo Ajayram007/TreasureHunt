@@ -11,7 +11,8 @@ const TrailUpdate = () => {
     Text: "",
     answer: "",
     file: null,          // new file
-    existingFile: null   // existing filename
+    existingFile: null,  // existing filename
+    questionIndex: questionIndex || "" // Added for reordering
   });
 
   const [message, setMessage] = useState("");
@@ -35,7 +36,8 @@ const TrailUpdate = () => {
           Text: q.Text || "",
           answer: q.answer || "",
           file: null,
-          existingFile: q.file || null
+          existingFile: q.file || null,
+          questionIndex: questionIndex // Sync with URL param initially
         });
 
         setLoading(false);
@@ -67,6 +69,10 @@ const TrailUpdate = () => {
       formData.append("Text", form.Text);
       formData.append("answer", form.answer);
 
+      if (form.questionIndex !== "" && form.questionIndex !== null) {
+        formData.append("questionIndex", Number(form.questionIndex));
+      }
+
       // Tell backend to delete old file if user removed it
       if (!form.existingFile) {
         formData.append("removeFile", "true");
@@ -96,62 +102,62 @@ const TrailUpdate = () => {
 
   // 🖼 Media Preview
   const renderMedia = (file) => {
-  if (!file) return null;
+    if (!file) return null;
 
-  const fileUrl = URL.createObjectURL(file); // creates local preview URL
+    let fileUrl = "";
+    let isNewFile = file instanceof File;
 
-  // Optional: clean up old blob URLs when component unmounts or file changes
-  // (you can also do this in useEffect cleanup)
+    if (isNewFile) {
+      fileUrl = URL.createObjectURL(file);
+    } else {
+      // Existing file from backend
+      const backendUrl = "http://localhost:3000"; // Should ideally come from config
+      fileUrl = file.startsWith("http")
+        ? file
+        : `${backendUrl}/uploads/${file}`;
+    }
 
-  if (file.type.startsWith('image/')) {
-    return (
-      <img
-        src={fileUrl}
-        alt="Preview"
-        className="img-fluid rounded shadow-sm"
-        style={{ maxHeight: '300px', objectFit: 'contain' }}
-        onLoad={() => URL.revokeObjectURL(fileUrl)} // optional cleanup
-      />
-    );
-  }
+    // Image
+    if (isNewFile ? file.type.startsWith("image/") : fileUrl.match(/\.(jpeg|jpg|png|gif)$/i)) {
+      return (
+        <img
+          src={fileUrl}
+          alt="Preview"
+          className="img-fluid rounded shadow-sm"
+          style={{ maxHeight: "300px", objectFit: "contain" }}
+          onLoad={() => isNewFile && URL.revokeObjectURL(fileUrl)}
+        />
+      );
+    }
 
-  if (file.type.startsWith('video/')) {
-    return (
-      <video
-        src={fileUrl}
-        controls
-        className="rounded shadow-sm"
-        style={{ maxHeight: '400px', width: '100%' }}
-        onLoadedData={() => URL.revokeObjectURL(fileUrl)}
-      />
-    );
-  }
+    // Video
+    if (isNewFile ? file.type.startsWith("video/") : fileUrl.match(/\.(mp4|webm|ogg)$/i)) {
+      return (
+        <video
+          src={fileUrl}
+          controls
+          className="rounded shadow-sm"
+          style={{ maxHeight: "400px", width: "100%" }}
+          onLoadedData={() => isNewFile && URL.revokeObjectURL(fileUrl)}
+        />
+      );
+    }
 
-  // PDF or other documents
-  if (file.type === 'application/pdf') {
+    // Fallback for documents or unknown types
     return (
       <div className="border rounded p-3 bg-light text-center">
-        <p className="mb-2">PDF Preview not supported inline.</p>
+        <p className="mb-2">Preview not supported for this file type.</p>
         <a
           href={fileUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-outline-primary btn-sm"
         >
-          Open PDF ({file.name})
+          View File {isNewFile ? `(${file.name})` : ""}
         </a>
       </div>
     );
-  }
-
-  // Fallback for any other file type
-  return (
-    <div className="alert alert-info mb-0">
-      Selected file: <strong>{file.name}</strong><br />
-      <small>Type: {file.type || 'unknown'} • Size: {(file.size / 1024).toFixed(1)} KB</small>
-    </div>
-  );
-};
+  };
 
   return (
     <div className="container mt-4">
@@ -183,10 +189,24 @@ const TrailUpdate = () => {
                   onChange={(e) =>
                     setForm({ ...form, Text: e.target.value })
                   }
-                  required
+                  
                 />
               </div>
-
+             {/* Question Index */}
+            <div className="mb-3">
+              <label className="form-label">
+                Insert at Question Index [0-4](optional)
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Leave empty to append"
+                value={form.questionIndex}
+                onChange={(e) =>
+                  setForm({ ...form, questionIndex: e.target.value })
+                }
+              />
+            </div>
               {/* Answer */}
               <div className="mb-3">
                 <label className="form-label">Answer</label>

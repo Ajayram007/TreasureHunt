@@ -71,9 +71,9 @@ router.post("/trailCreate",verifyToken,upload.single("file"),async (req, res) =>
       }
 
       const level = Number(levelNumber);
-      if (level < 1 || level > 6) {
+      if (level < 1 || level > 5) {
         return res.status(400).json({
-          message: "Level number must be from 1 to 6"
+          message: "Level number must be from 1 to 5"
         });
       }
 
@@ -86,14 +86,14 @@ router.post("/trailCreate",verifyToken,upload.single("file"),async (req, res) =>
         });
       }
 
-      if (trail.questions.length >= 4) {
+      if (trail.questions.length >= 5) {
         return res.status(400).json({
-          message: `Level ${level} already has 4 questions`
+          message: `Level ${level} already has 5 questions`
         });
       }
 
       const newQuestion = {
-        Text,
+        Text: Text || "", // Ensure Text is at least an empty string
         answer,
         file
       };
@@ -122,8 +122,9 @@ router.post("/trailCreate",verifyToken,upload.single("file"),async (req, res) =>
       });
     } catch (error) {
       console.error("trailCreate Error:", error);
-      res.status(500).json({
-        message: "Server Error",
+      const status = error.name === "ValidationError" ? 400 : 500;
+      res.status(status).json({
+        message: status === 400 ? "Validation Error" : "Server Error",
         error: error.message
       });
     }
@@ -230,10 +231,10 @@ router.put("/trailUpdate/:levelNumber/:questionIndex",verifyToken,upload.single(
 
       const level = Number(req.params.levelNumber);
       const index = Number(req.params.questionIndex);
-      const { Text, answer, removeFile } = req.body;
+      const { Text, answer, removeFile, questionIndex: newIndexRaw } = req.body;
 
-      if (!Number.isInteger(level) || level < 1 || level > 6) {
-        return res.status(400).json({ message: "Invalid level number" });
+      if (!Number.isInteger(level) || level < 1 || level > 5) {
+        return res.status(400).json({ message: "Invalid level number (1-5)" });
       }
 
       const trail = await Trail.findOne({ levelNumber: level });
@@ -249,20 +250,18 @@ router.put("/trailUpdate/:levelNumber/:questionIndex",verifyToken,upload.single(
         return res.status(400).json({ message: "Invalid question index" });
       }
 
+      // Update question fields first
       const question = trail.questions[index];
-
-      // ✏️ Update text fields
       if (Text !== undefined) question.Text = Text;
       if (answer !== undefined) question.answer = answer;
 
-      // 🗑 Remove old file explicitly
+      // File handling
       if (removeFile === "true" && question.file) {
         const filePath = path.join(__dirname, "..", "uploads", question.file);
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
         question.file = null;
       }
 
-      // 📥 Replace with new file
       if (req.file) {
         if (question.file) {
           const oldPath = path.join(__dirname, "..", "uploads", question.file);
@@ -271,15 +270,34 @@ router.put("/trailUpdate/:levelNumber/:questionIndex",verifyToken,upload.single(
         question.file = req.file.filename;
       }
 
+      // Reorder if new index provided
+      let newIndex = index;
+      if (newIndexRaw !== undefined && newIndexRaw !== "") {
+        newIndex = Number(newIndexRaw);
+      }
+
+      if (newIndex !== index) {
+        if (newIndex >= 0 && newIndex < trail.questions.length) {
+          const [movedQuestion] = trail.questions.splice(index, 1);
+          trail.questions.splice(newIndex, 0, movedQuestion);
+        } else {
+          return res.status(400).json({ message: "Invalid target question index" });
+        }
+      }
+
       await trail.save();
 
       res.status(200).json({
         message: "Question updated successfully",
-        question
+        question: trail.questions[newIndex] // Return the question at its new position
       });
     } catch (err) {
       console.error("trailUpdate Error:", err);
-      res.status(500).json({ message: "Server error", error: err.message });
+      const status = err.name === "ValidationError" ? 400 : 500;
+      res.status(status).json({ 
+        message: status === 400 ? "Validation Error" : "Server error", 
+        error: err.message 
+      });
     }
   }
 );
@@ -298,10 +316,12 @@ router.delete("/trailDelete/:levelNumber/:questionIndex",verifyToken,async (req,
         });
       }
 
-      const { levelNumber, questionIndex } = req.params;
+      const { levelNumber: levelParam, questionIndex: indexParam } = req.params;
+      const levelNumber = Number(levelParam);
+      const questionIndex = Number(indexParam);
 
       //  Validate level
-      if (levelNumber < 1 || levelNumber > 6) {
+      if (levelNumber < 1 || levelNumber > 5) {
         return res.status(400).json({
           message: "Level number must be from 1 to 5"
         });
@@ -340,8 +360,9 @@ router.delete("/trailDelete/:levelNumber/:questionIndex",verifyToken,async (req,
 
     } catch (error) {
       console.error("trailDelete Error:", error);
-      res.status(500).json({
-        message: "Server Error",
+      const status = error.name === "ValidationError" ? 400 : 500;
+      res.status(status).json({
+        message: status === 400 ? "Validation Error" : "Server Error",
         error: error.message
       });
     }
