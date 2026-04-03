@@ -13,7 +13,7 @@ const trailSchema = new mongoose.Schema({
       {
         Text: {
           type: String,
-          required: true
+          required: false
         },
         answer: {
           type: String,
