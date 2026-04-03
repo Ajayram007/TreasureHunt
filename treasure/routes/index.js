@@ -44,11 +44,14 @@ const verifyToken = async (req, res, next) => {
 //  SIGNUP ROUTE
 router.post('/signup', async (req, res) => {
   try {
-    const { name, password, role , department, phonenumber } = req.body;
+    const { name, password, department, phonenumber } = req.body;
+    // Security Hardening: Force role to 'user' for public signup. 
+    // Admin accounts must be created by an existing administrator via the /create route.
+    const userRole = 'user';
 
     //  Basic validation
-    if (!name || !password || !role || !department || !phonenumber) {
-      return res.status(400).json({ message: 'Name , role , department, phonenumber and password are required.' });
+    if (!name || !password || !department || !phonenumber) {
+      return res.status(400).json({ message: 'Name, department, phonenumber and password are required.' });
     }
 
     //  Check if user already exists
@@ -66,7 +69,7 @@ router.post('/signup', async (req, res) => {
       name,
       // group,
       password: hashedPassword,
-      role,
+      role: userRole,
       phonenumber,
       department
     });
