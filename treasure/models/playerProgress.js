@@ -10,7 +10,7 @@ const progressSchema = new mongoose.Schema({
       levelNumber: { type: Number, required: true },
       name: { type: String, required: false },
       answer: { type: String, required: true }, // stored internally
-      image: { type: String } // optional
+      file: { type: String } // matches Trail model
     }
   ],
   placeIndex: { type: Number, default: 0 },

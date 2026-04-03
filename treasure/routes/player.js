@@ -138,8 +138,8 @@ router.post("/start-game/:playerId", verifyToken, async (req, res) => {
           nextTarget: current
             ? {
                 levelNumber: current.levelNumber,
-                Text: current.Text,
-                file: current.file || null
+                Text: current.Text || "",
+                file: current.file || current.image || null // Fallback for old data
               }
             : null,
           totalLevels
@@ -258,8 +258,8 @@ router.post("/verify-qr/:playerId", verifyToken, async (req, res) => {
       const next = progress.path[progress.placeIndex];
       response.nextTarget = {
         levelNumber: next.levelNumber,
-        Text: next.Text,
-        file: next.file || null
+        Text: next.Text || "",
+        file: next.file || next.image || null
       };
       progress.currentLevelNumber = next.levelNumber;
     } else {
@@ -286,6 +286,28 @@ router.post("/verify-qr/:playerId", verifyToken, async (req, res) => {
 
 
 
+
+// RESET GAME
+router.post("/reset-game/:playerId", verifyToken, async (req, res) => {
+  try {
+    const playerId = req.params.playerId;
+
+    if (!playerId) {
+      return res.status(400).json({ message: "playerId is required" });
+    }
+
+    const result = await Progress.deleteOne({ playerId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "No active game found to reset" });
+    }
+
+    return res.json({ message: "Game reset successfully! You can now start again." });
+  } catch (error) {
+    console.error("Reset Game Error:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 module.exports = router;
 

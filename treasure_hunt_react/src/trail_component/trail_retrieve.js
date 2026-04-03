@@ -118,11 +118,12 @@ const TrailList = () => {
                         <p className="card-text">{q.Text}</p>
 
                         {/* Render file with distinct width & height */}
-                        {q.file && (() => {
+                        {(q.file || q.image) && (() => {
                           const backendUrl = "http://localhost:3000"; // Should ideally come from config
-                          const fileUrl = q.file.startsWith("http")
-                            ? q.file
-                            : `${backendUrl}/uploads/${q.file}`;
+                          const file = q.file || q.image;
+                          const fileUrl = file.startsWith("http")
+                            ? file
+                            : `${backendUrl}/uploads/${file}`;
 
                           // Image
                           if (fileUrl.match(/\.(jpeg|jpg|png|gif)$/i)) {

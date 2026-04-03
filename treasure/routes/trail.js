@@ -231,7 +231,7 @@ router.put("/trailUpdate/:levelNumber/:questionIndex",verifyToken,upload.single(
 
       const level = Number(req.params.levelNumber);
       const index = Number(req.params.questionIndex);
-      const { Text, answer, removeFile, questionIndex: newIndexRaw } = req.body;
+      const { Text, answer, removeFile } = req.body;
 
       if (!Number.isInteger(level) || level < 1 || level > 5) {
         return res.status(400).json({ message: "Invalid level number (1-5)" });
@@ -250,18 +250,20 @@ router.put("/trailUpdate/:levelNumber/:questionIndex",verifyToken,upload.single(
         return res.status(400).json({ message: "Invalid question index" });
       }
 
-      // Update question fields first
       const question = trail.questions[index];
+
+      // ✏️ Update text fields
       if (Text !== undefined) question.Text = Text;
       if (answer !== undefined) question.answer = answer;
 
-      // File handling
+      // 🗑 Remove old file explicitly
       if (removeFile === "true" && question.file) {
         const filePath = path.join(__dirname, "..", "uploads", question.file);
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
         question.file = null;
       }
 
+      // 📥 Replace with new file
       if (req.file) {
         if (question.file) {
           const oldPath = path.join(__dirname, "..", "uploads", question.file);
@@ -270,26 +272,11 @@ router.put("/trailUpdate/:levelNumber/:questionIndex",verifyToken,upload.single(
         question.file = req.file.filename;
       }
 
-      // Reorder if new index provided
-      let newIndex = index;
-      if (newIndexRaw !== undefined && newIndexRaw !== "") {
-        newIndex = Number(newIndexRaw);
-      }
-
-      if (newIndex !== index) {
-        if (newIndex >= 0 && newIndex < trail.questions.length) {
-          const [movedQuestion] = trail.questions.splice(index, 1);
-          trail.questions.splice(newIndex, 0, movedQuestion);
-        } else {
-          return res.status(400).json({ message: "Invalid target question index" });
-        }
-      }
-
       await trail.save();
 
       res.status(200).json({
         message: "Question updated successfully",
-        question: trail.questions[newIndex] // Return the question at its new position
+        question
       });
     } catch (err) {
       console.error("trailUpdate Error:", err);

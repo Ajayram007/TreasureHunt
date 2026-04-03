@@ -11,8 +11,7 @@ const TrailUpdate = () => {
     Text: "",
     answer: "",
     file: null,          // new file
-    existingFile: null,  // existing filename
-    questionIndex: questionIndex || "" // Added for reordering
+    existingFile: null   // existing filename
   });
 
   const [message, setMessage] = useState("");
@@ -36,8 +35,7 @@ const TrailUpdate = () => {
           Text: q.Text || "",
           answer: q.answer || "",
           file: null,
-          existingFile: q.file || null,
-          questionIndex: questionIndex // Sync with URL param initially
+          existingFile: q.file || null
         });
 
         setLoading(false);
@@ -68,10 +66,6 @@ const TrailUpdate = () => {
 
       formData.append("Text", form.Text);
       formData.append("answer", form.answer);
-
-      if (form.questionIndex !== "" && form.questionIndex !== null) {
-        formData.append("questionIndex", Number(form.questionIndex));
-      }
 
       // Tell backend to delete old file if user removed it
       if (!form.existingFile) {

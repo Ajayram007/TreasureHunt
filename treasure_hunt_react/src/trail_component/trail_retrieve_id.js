@@ -52,7 +52,8 @@ const TrailRetrieveId = () => {
   };
 
   // Helper function to render media
-  const renderMedia = (file) => {
+  const renderMedia = (fileProp, imageProp) => {
+    const file = fileProp || imageProp;
     if (!file) return null;
 
     const backendUrl = "http://localhost:3000"; // Should ideally come from config

@@ -79,6 +79,8 @@ const StartGame = () => {
   }
 }, [playerId]);
 
+
+
   useEffect(() => {
     fetchGameState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,7 +141,8 @@ const StartGame = () => {
   /* ---------------- FILE RENDER ---------------- */
   const renderFile = (file) => {
     if (!file) return null;
-    const fileUrl = `/uploads/${file}`;
+    const backendUrl = "http://localhost:3000"; // Should ideally come from config
+    const fileUrl = `${backendUrl}/uploads/${file}`;
 
     if (/\.(jpg|jpeg|png|gif)$/i.test(file)) {
       return <img src={fileUrl} alt="clue" className="img-fluid rounded" />;
@@ -258,10 +261,14 @@ const StartGame = () => {
               ) : nextTarget ? (
                 <>
                   <h5>Level {nextTarget.levelNumber}</h5>
-                  <p className="small">{nextTarget.Text}</p>
+                  <p className="mb-2 text-primary fw-bold" style={{ fontSize: "1.1rem" }}>
+                    {nextTarget.Text || "Clue is loading..."}
+                  </p>
 
-                  {nextTarget.file && (
-                    <div className="mt-2">{renderFile(nextTarget.file)}</div>
+                  {(nextTarget.file || nextTarget.image) && (
+                    <div className="mt-3 mb-3 border rounded p-2 bg-light">
+                      {renderFile(nextTarget.file || nextTarget.image)}
+                    </div>
                   )}
 
                   <button
