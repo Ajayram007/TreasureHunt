@@ -56,7 +56,7 @@ const TrailRetrieveId = () => {
     const file = fileProp || imageProp;
     if (!file) return null;
 
-    const backendUrl = axios.defaults.baseURL || "http://localhost:3000";
+    const backendUrl = (axios.defaults.baseURL || "http://localhost:3000").replace(/\/$/, "");
     const fileUrl = file.startsWith("http") ? file : `${backendUrl}/uploads/${file}`;
 
     if (fileUrl.match(/\.(jpeg|jpg|png|gif)$/i)) {
