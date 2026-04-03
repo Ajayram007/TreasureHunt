@@ -141,7 +141,7 @@ const StartGame = () => {
   /* ---------------- FILE RENDER ---------------- */
   const renderFile = (file) => {
     if (!file) return null;
-    const backendUrl = "http://localhost:3000"; // Should ideally come from config
+    const backendUrl = axios.defaults.baseURL || "http://localhost:3000";
     const fileUrl = `${backendUrl}/uploads/${file}`;
 
     if (/\.(jpg|jpeg|png|gif)$/i.test(file)) {

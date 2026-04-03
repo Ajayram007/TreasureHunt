@@ -119,7 +119,7 @@ const TrailList = () => {
 
                         {/* Render file with distinct width & height */}
                         {(q.file || q.image) && (() => {
-                          const backendUrl = "http://localhost:3000"; // Should ideally come from config
+                          const backendUrl = axios.defaults.baseURL || "http://localhost:3000";
                           const file = q.file || q.image;
                           const fileUrl = file.startsWith("http")
                             ? file

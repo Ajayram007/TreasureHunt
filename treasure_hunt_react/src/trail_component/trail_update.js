@@ -105,7 +105,7 @@ const TrailUpdate = () => {
       fileUrl = URL.createObjectURL(file);
     } else {
       // Existing file from backend
-      const backendUrl = "http://localhost:3000"; // Should ideally come from config
+      const backendUrl = axios.defaults.baseURL || "http://localhost:3000";
       fileUrl = file.startsWith("http")
         ? file
         : `${backendUrl}/uploads/${file}`;
