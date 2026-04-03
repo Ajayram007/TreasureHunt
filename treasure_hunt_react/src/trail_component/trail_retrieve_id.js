@@ -65,7 +65,7 @@ const TrailRetrieveId = () => {
           src={fileUrl}
           alt="attachment"
           className="img-fluid rounded shadow-sm"
-          style={{ maxWidth: "400px", maxHeight: "250px", objectFit: "cover" }}
+          style={{ maxWidth: "100%", maxHeight: "300px", objectFit: "cover", borderRadius: "8px" }}
         />
       );
     }
@@ -75,7 +75,7 @@ const TrailRetrieveId = () => {
         <video
           controls
           className="img-fluid rounded shadow-sm"
-          style={{ maxWidth: "400px", maxHeight: "250px" }}
+          style={{ maxWidth: "100%", maxHeight: "300px", borderRadius: "8px" }}
         >
           <source src={fileUrl} />
         </video>

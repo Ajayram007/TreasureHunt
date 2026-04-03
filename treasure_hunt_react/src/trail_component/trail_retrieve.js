@@ -132,9 +132,10 @@ const TrailList = () => {
                                 src={fileUrl}
                                 alt="Attachment"
                                 style={{
-                                  width: "400px",
-                                  height: "250px",
+                                  maxWidth: "100%",
+                                  maxHeight: "300px",
                                   objectFit: "cover",
+                                  borderRadius: "8px",
                                   marginBottom: "10px",
                                 }}
                                 onClick={(e) => e.stopPropagation()}
@@ -149,8 +150,9 @@ const TrailList = () => {
                                 src={fileUrl}
                                 controls
                                 style={{
-                                  width: "400px",
-                                  height: "250px",
+                                  maxWidth: "100%",
+                                  maxHeight: "300px",
+                                  borderRadius: "8px",
                                   marginBottom: "10px",
                                 }}
                                 onClick={(e) => e.stopPropagation()}

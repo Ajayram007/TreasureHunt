@@ -104,11 +104,11 @@ const TrailUpdate = () => {
     if (isNewFile) {
       fileUrl = URL.createObjectURL(file);
     } else {
-      // Existing file from backend
-      const backendUrl = axios.defaults.baseURL || "http://localhost:3000";
-      fileUrl = file.startsWith("http")
-        ? file
-        : `${backendUrl}/uploads/${file}`;
+       // Existing file from backend
+       const backendUrl = (axios.defaults.baseURL || "http://localhost:3000").replace(/\/$/, "");
+       fileUrl = file.startsWith("http")
+         ? file
+         : `${backendUrl}/uploads/${file}`;
     }
 
     // Image

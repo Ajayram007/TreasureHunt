@@ -142,16 +142,24 @@ const StartGame = () => {
   const renderFile = (file) => {
     if (!file) return null;
     const backendUrl = (axios.defaults.baseURL || "http://localhost:3000").replace(/\/$/, "");
-    const fileUrl = `${backendUrl}/uploads/${file}`;
+    const fileUrl = file.startsWith("http") ? file : `${backendUrl}/uploads/${file}`;
+
+    const mediaStyle = {
+      maxWidth: "100%",
+      maxHeight: "350px",
+      objectFit: "cover",
+      borderRadius: "12px",
+      marginBottom: "15px"
+    };
 
     if (/\.(jpg|jpeg|png|gif)$/i.test(file)) {
-      return <img src={fileUrl} alt="clue" className="img-fluid rounded" />;
+      return <img src={fileUrl} alt="clue" className="img-fluid" style={mediaStyle} />;
     }
     if (/\.(mp4|webm|ogg)$/i.test(file)) {
-      return <video src={fileUrl} controls className="w-100 rounded" />;
+      return <video src={fileUrl} controls className="w-100" style={{ ...mediaStyle, objectFit: "contain" }} />;
     }
     return (
-      <a href={fileUrl} target="_blank" rel="noreferrer">
+      <a href={fileUrl} target="_blank" rel="noreferrer" className="btn btn-outline-primary btn-sm">
         📎 View Attachment
       </a>
     );
