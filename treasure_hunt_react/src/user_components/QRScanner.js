@@ -20,18 +20,22 @@ const QRScanner = ({ onScan }) => {
 
             console.log("QR RAW =", decodedText);
 
-            let parsed = null;
-
-            // ✅ Parse JSON QR containing only { answer: "..." }
+            // ✅ Parse QR: handle JSON { answer: "..." } or Raw "..."
             try {
-              parsed = JSON.parse(decodedText);
+              const res = JSON.parse(decodedText);
+              // Use res if it's an object with an 'answer' property
+              if (res && typeof res === 'object' && res.answer) {
+                parsed = res;
+              } else {
+                // Otherwise treat raw text as the answer (e.g. "3" or "A")
+                parsed = { answer: String(decodedText).trim() };
+              }
             } catch (err) {
-              parsed = { answer: decodedText.trim() };
-              
+              parsed = { answer: String(decodedText).trim() };
             }
 
             if (!parsed.answer) {
-              onScan({ error: "Invalid QR! Missing 'answer' field." });
+              onScan({ error: "Invalid QR! Missing value." });
               return;
             }
 
