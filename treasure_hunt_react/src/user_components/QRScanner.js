@@ -12,11 +12,17 @@ const QRScanner = ({ onScan }) => {
       try {
         scannerRef.current = new Html5Qrcode("qr-reader");
 
+        const lastScanTime = { current: 0 };
         await scannerRef.current.start(
           { facingMode: "environment" },
           { fps: 10, qrbox: 250 },
           (decodedText) => {
             if (!isRunning.current) return;
+
+            // ✅ Cooldown: 1 second pause between scans
+            const now = Date.now();
+            if (now - lastScanTime.current < 1000) return;
+            lastScanTime.current = now;
 
             console.log("QR RAW =", decodedText);
 
