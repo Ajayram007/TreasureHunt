@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
   phonenumber: {
     type:Number,
     required:[true, 'Phone Number field is required'],
+    unique: true,
     minlength: [10, 'atleast 10 characters required'],
     maxlength: [10, 'atleast 10 characters required']
   },

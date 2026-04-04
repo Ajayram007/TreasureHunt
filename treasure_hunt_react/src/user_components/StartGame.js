@@ -90,8 +90,8 @@ const StartGame = () => {
 
   /* ---------------- HANDLE QR ---------------- */
   const handleScan = useCallback(async (parsed) => {
-    // ✅ Cooldown check: 3 sec pause
-    if (Date.now() - lastScanTime.current < 3000) return;
+    // ✅ Cooldown check: 1 sec pause
+    if (Date.now() - lastScanTime.current < 1000) return;
     lastScanTime.current = Date.now();
 
     if (!parsed?.answer) {

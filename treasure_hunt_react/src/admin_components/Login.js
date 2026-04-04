@@ -6,7 +6,7 @@ import { authSuccess } from "../store/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    phonenumber: "",
     password: ""
   });
 
@@ -67,14 +67,14 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           {/* Name */}
           <div className="mb-3">
-            <label className="form-label">Name</label>
+            <label className="form-label">Phone Number</label>
             <input
               type="text"
-              name="name"
+              name="phonenumber"
               className="form-control"
-              value={formData.name}
+              value={formData.phonenumber}
               onChange={handleChange}
-              placeholder="Enter your name"
+              placeholder="Enter your phone number"
               required
             />
           </div>

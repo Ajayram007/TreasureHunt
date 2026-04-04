@@ -83,6 +83,9 @@ router.post('/signup', async (req, res) => {
 
   } catch (error) {
     console.error('Signup Error:', error.message);
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'User with this phone number already exists.' });
+    }
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 });
@@ -90,12 +93,12 @@ router.post('/signup', async (req, res) => {
 //  LOGIN ROUTE
 router.post('/login', async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { phonenumber, password } = req.body;
     
     //  Check if user exists
-    const user = await User.findOne({ name });
+    const user = await User.findOne({ phonenumber });
     if (!user) {
-      return res.status(400).json({ message: 'User not found.' });
+      return res.status(400).json({ message: 'User not found with this phone number.' });
     }
 console.log("USER FROM BACKEND:", user);
 
@@ -117,7 +120,7 @@ console.log("USER FROM BACKEND:", user);
       token,
       user: {
         id:user._id,
-        name: user.name,
+        phonenumber: user.phonenumber,
         group: user.group,
         role: user.role,
         department: user.department,
@@ -182,6 +185,9 @@ router.post('/create', verifyToken, async (req, res) => {
 
   } catch (error) {
     console.error('Admin Create User Error:', error.message);
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'User with this phone number already exists.' });
+    }
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 });
