@@ -56,8 +56,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/uploads", express.static("uploads"));
-
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use((req, res, next) => {
@@ -69,7 +67,6 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/trail', trailRouter);
 app.use('/player', playerRouter);
-app.use("/uploads", express.static("uploads"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -78,6 +75,16 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  const isApiRequest = req.path.startsWith('/player') || req.path.startsWith('/trail');
+  
+  if (isApiRequest || req.xhr || req.headers.accept?.includes('application/json')) {
+    return res.status(err.status || 500).json({
+      message: err.message,
+      error: req.app.get('env') === 'development' ? err : {}
+    });
+  }
+
+  // Fallback to rendering HTML for non-API requests
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
